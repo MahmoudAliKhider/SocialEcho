@@ -41,12 +41,13 @@ const userSchema = new mongoose.Schema({
   },
 
   dateOfBirth: {
-    type:Date,
-    required:true,
+    type: Date,
+    required: true,
   },
-  graduationYear:  {
-    type:Date,
-    required:true,
+  graduationYear: {
+    type: Date,
+    required: true,
   },
+  imageUrl: { type: String, default: null },
 });
 module.exports = mongoose.model("Users", userSchema);

@@ -1,15 +1,19 @@
 const express = require("express");
-// const bodyParser = require('body-parser');
+const path = require("path");
 
 const app = express();
 
-const DatabaseConnection = require('./config/database');
+const DatabaseConnection = require("./config/database");
 require("dotenv").config();
 
-app.use(express.json());
 DatabaseConnection();
 
-app.use('/api/user',require('./routers/authUser'));
+app.use(express.json());
+
+app.use(express.static(path.join(__dirname, "uploads")));
+
+app.use("/api/account", require("./routers/authUser"));
+app.use("/api/user", require("./routers/user"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

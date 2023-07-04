@@ -18,6 +18,7 @@ router.post("/register", signupValidator, async (req, res) => {
     address,
     graduationYear,
     dateOfBirth,
+    
   } = req.body;
 
   try {
@@ -156,7 +157,7 @@ router.post("/resetPassword", async (req, res) => {
     return res.send("Reset code not verified").status(400);
   }
 
-  const newpassword= await bcrypt.hash(req.body.newPassword, 10)
+  const newpassword = await bcrypt.hash(req.body.newPassword, 10);
   user.password = newpassword;
   user.passwordResetCode = undefined;
   user.passwordResetExpires = undefined;
