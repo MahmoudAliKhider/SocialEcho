@@ -26,15 +26,11 @@ exports.signupValidator = [
   
   check("dateOfBirth")
     .notEmpty()
-    .withMessage("dateOfBirth is required")
-    .isBefore(moment().year(2010).endOf('year').toDate())
-    .withMessage("You must be less than 2010"),  
+    .withMessage("dateOfBirth is required"),  
   
     check("graduationYear")
     .notEmpty()
-    .withMessage("graduationYear is required")
-    .isBefore(moment().year(2023).endOf('year').toDate())
-    .withMessage("You must be less than 2023"),  
+    .withMessage("graduationYear is required"),
 
   validatorMiddleware,
 ];
