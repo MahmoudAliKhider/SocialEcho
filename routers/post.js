@@ -112,7 +112,7 @@ router.put(
       if (!post) {
         return res.status(404).json({ message: "Post not found" });
       }
-  
+
       // Delete the previous image if it exists
       if (post.postImageUrl) {
         const imagePath = path.join("uploads/posts", post.postImageUrl);
@@ -120,9 +120,9 @@ router.put(
           fs.unlinkSync(imagePath);
         }
       }
-  
+
       post.content = req.body.content;
-  
+
       if (req.file) {
         const filename = `post-${uuidv4()}-${Date.now()}.jpeg`;
         await sharp(req.file.buffer)
@@ -130,12 +130,12 @@ router.put(
           .toFormat("jpeg")
           .jpeg({ quality: 95 })
           .toFile(`uploads/posts/${filename}`);
-  
+
         post.postImageUrl = filename;
       }
-  
+
       const updatedPost = await post.save();
-  
+
       res.status(200).json({ data: updatedPost });
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -143,4 +143,29 @@ router.put(
     }
   }
 );
+
+router.post("/:postId/like", async (req, res) => {
+  const postId = req.params.postId;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.isLikedByCurrentUser) {
+      post.isLikedByCurrentUser = false;
+    } else {
+      post.isLikedByCurrentUser = true;
+    }
+
+    await post.save();
+
+    res.status(200).json({ data: post });
+  } catch (error) {
+    console.error("Error updating post:", error);
+    res.status(500).json({ message: "Error updating post", error });
+  }
+});
+
 module.exports = router;
