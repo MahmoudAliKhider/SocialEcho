@@ -13,11 +13,18 @@ const postSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  numberUsermakeLike: {
+    type: Number,
+    default: 0,
+  },
+  usersWhoLiked: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+  }],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
   },
-  
 });
 
 const Post = mongoose.model("Posts", postSchema);

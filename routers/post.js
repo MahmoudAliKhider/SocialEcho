@@ -146,17 +146,27 @@ router.put(
 
 router.post("/:postId/like", async (req, res) => {
   const postId = req.params.postId;
-
+  const userId = req.user.userId;
+  
   try {
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    if (post.isLikedByCurrentUser) {
+    const likedByCurrentUser = post.isLikedByCurrentUser;
+    const currentUserIndex = post.usersWhoLiked.indexOf(userId);
+
+    if (likedByCurrentUser && currentUserIndex !== -1) {
+      // User already liked the post, so remove the like
+      post.usersWhoLiked.splice(currentUserIndex, 1);
       post.isLikedByCurrentUser = false;
+      post.numberUsermakeLike -= 1;
     } else {
+      // User hasn't liked the post, so add the like
+      post.usersWhoLiked.push(userId);
       post.isLikedByCurrentUser = true;
+      post.numberUsermakeLike += 1;
     }
 
     await post.save();
@@ -167,5 +177,10 @@ router.post("/:postId/like", async (req, res) => {
     res.status(500).json({ message: "Error updating post", error });
   }
 });
+
+
+
+
+
 
 module.exports = router;
