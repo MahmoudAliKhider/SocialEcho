@@ -12,7 +12,6 @@ router.post("/:recipientId", async (req, res) => {
     const newMessage = new Message({ senderId, recipientId, content });
     await newMessage.save();
 
-    // Emit the message to the recipientId using Socket.io
     const io = getSocket();
     io.to(recipientId).emit("new_message", { senderId, content });
 

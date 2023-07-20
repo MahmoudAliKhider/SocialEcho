@@ -76,7 +76,6 @@ router.post("/:destinationUserId", async (req, res) => {
   }
 });
 
-
 router.get("/current-user-followers", async (req, res) => {
   const loggedInUserId = req.user.userId;
 
