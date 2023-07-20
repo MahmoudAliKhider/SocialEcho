@@ -196,13 +196,11 @@ router.post("/comment/:postId", async (req, res) => {
     const comment = {
       content,
       user: user._id,
-      // userName: user.userName,
-      // imageUrl: user.imageUrl, 
     };
 
     post.comments.push(comment);
-    await post.save(); 
-    
+    await post.save();
+
     const updatedPost = await Post.findById(postId).populate({
       path: "comments.user",
       select: "userName imageUrl",
@@ -214,4 +212,5 @@ router.post("/comment/:postId", async (req, res) => {
     console.log(error);
   }
 });
+
 module.exports = router;
