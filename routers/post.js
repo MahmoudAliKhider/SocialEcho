@@ -178,4 +178,40 @@ router.post("/:postId/like", async (req, res) => {
   }
 });
 
+router.post("/comment/:postId", async (req, res) => {
+  const { postId } = req.params;
+  const content = req.body.content;
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found." });
+    }
+
+    const loggedInUserId = req.user.userId;
+    const user = await User.findById(loggedInUserId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    const comment = {
+      content,
+      user: user._id,
+      // userName: user.userName,
+      // imageUrl: user.imageUrl, 
+    };
+
+    post.comments.push(comment);
+    await post.save(); 
+    
+    const updatedPost = await Post.findById(postId).populate({
+      path: "comments.user",
+      select: "userName imageUrl",
+    });
+
+    res.status(201).json({ data: updatedPost });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating the comment.", error });
+    console.log(error);
+  }
+});
 module.exports = router;
