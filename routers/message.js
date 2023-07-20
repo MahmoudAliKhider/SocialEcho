@@ -45,7 +45,7 @@ router.delete("/:messageId", async (req, res) => {
     const message = await Message.findByIdAndDelete(messageId);
 
     if (!message) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ message: "Message not found" });
     }
 
     res.status(200).json({ message: "Message deleted successfully" });
