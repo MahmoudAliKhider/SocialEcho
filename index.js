@@ -35,6 +35,7 @@ app.use(authMiddleware);
 app.use("/api/user", require("./routers/user"));
 app.use("/api/post", require("./routers/post"));
 app.use("/api/message", require("./routers/message"));
+app.use("/api/myNetwork", require("./routers/myNetwork"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
