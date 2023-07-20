@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const MyNetwork = require("../models/my-network");
 const User = require("../models/user");
+const Notification = require("../models/notification");
 
 router.post("/:destinationUserId", async (req, res) => {
   const { destinationUserId } = req.params;
@@ -38,9 +39,17 @@ router.post("/:destinationUserId", async (req, res) => {
     // Update the destination user's followBy list
     const updatedDestinationNetwork = await MyNetwork.findOneAndUpdate(
       { user: destinationUserId },
-      { $addToSet: { followBy: loggedInUserId } },
+      { $addToSet: { followBy: loggedInUserId } }, // Use $addToSet to avoid duplicates
       { upsert: true }
     );
+
+    // Create a notification for the destination user
+    const newNotification = new Notification({
+      type: "follow",
+      userId: destinationUserId,
+      message: "You have a new follower.",
+    });
+    await newNotification.save();
 
     const followers = await User.find(
       { _id: { $in: updatedMyNetwork.followers } },
@@ -66,6 +75,7 @@ router.post("/:destinationUserId", async (req, res) => {
     console.log(error);
   }
 });
+
 
 router.get("/current-user-followers", async (req, res) => {
   const loggedInUserId = req.user.userId;

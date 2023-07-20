@@ -36,6 +36,7 @@ app.use("/api/user", require("./routers/user"));
 app.use("/api/post", require("./routers/post"));
 app.use("/api/message", require("./routers/message"));
 app.use("/api/myNetwork", require("./routers/myNetwork"));
+app.use("/api/notifications", require("./routers/notification"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

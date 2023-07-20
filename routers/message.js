@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Message = require("../models/message");
+const Notification = require("../models/notification");
 const { getSocket } = require("../utils/socket/socket.io");
 
 router.post("/:recipientId", async (req, res) => {
@@ -13,7 +14,16 @@ router.post("/:recipientId", async (req, res) => {
 
     // Emit the message to the recipientId using Socket.io
     const io = getSocket();
-    io.to(recipientId).emit("new_message", { senderId, content }); // Include the senderId in the emitted message
+    io.to(recipientId).emit("new_message", { senderId, content });
+
+    // Create a notification for the recipient
+    const newNotification = new Notification({
+      type: "message",
+      userId: recipientId,
+      message: "You have received a new message.",
+    });
+    await newNotification.save();
+
     res.status(200).json({ message: "Message sent successfully." });
   } catch (error) {
     res.status(500).json({ message: "Error sending the message." });
