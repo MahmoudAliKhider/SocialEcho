@@ -5,10 +5,26 @@ const app = express();
 
 const DatabaseConnection = require("./config/database");
 const authMiddleware = require("./middelware/authMiddelware");
+const { initSocket } = require('./utils/socket/socket.io'); // Import the initSocket function
+
 require("dotenv").config();
 
-DatabaseConnection();
+const http = require('http');
+const io = initSocket(http);
 
+io.on('connection', (socket) => {
+  console.log('A user connected.');
+
+  socket.on('join', (recipientId) => {
+    socket.join(recipientId);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected.');
+  });
+});
+
+DatabaseConnection();
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "uploads")));
@@ -18,6 +34,7 @@ app.use(authMiddleware);
 
 app.use("/api/user", require("./routers/user"));
 app.use("/api/post", require("./routers/post"));
+app.use("/api/message", require("./routers/message"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

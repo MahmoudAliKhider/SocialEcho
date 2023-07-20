@@ -147,7 +147,7 @@ router.put(
 router.post("/:postId/like", async (req, res) => {
   const postId = req.params.postId;
   const userId = req.user.userId;
-  
+
   try {
     const post = await Post.findById(postId);
     if (!post) {
@@ -177,10 +177,5 @@ router.post("/:postId/like", async (req, res) => {
     res.status(500).json({ message: "Error updating post", error });
   }
 });
-
-
-
-
-
 
 module.exports = router;
