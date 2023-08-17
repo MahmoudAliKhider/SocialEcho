@@ -1,9 +1,7 @@
-# Alumni
-# It is a social media website
 
-# Your Project Name
+# SocialEcho
 
-Brief description or introduction of your project.
+Brief description or introduction of your social media project.
 
 ## Table of Contents
 
@@ -11,15 +9,20 @@ Brief description or introduction of your project.
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Socket.io](#socketio)
 - [API Endpoints](#api-endpoints)
+  - [User](#user)
+  - [Post](#post)
+  - [Message](#message)
+  - [My Network](#my-network)
+  - [Notifications](#notifications)
+  - [Authentication](#authentication)
 - [Environment Variables](#environment-variables)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
 
-A brief overview of your project and its purpose. You can provide context on why you created this project and what problem it aims to solve.
+A brief overview of your social media project and its purpose. Explain what makes your project unique and how it addresses the needs of users.
 
 ## Prerequisites
 
@@ -27,68 +30,135 @@ List any prerequisites or requirements that need to be installed or set up befor
 
 ## Installation
 
-A step-by-step guide on how to install and set up your project. Include any commands that need to be run to get your project up and running.
+A step-by-step guide on how to install and set up your social media project. Include any commands that need to be run to get your project up and running.
 
 ```bash
 # Example installation steps
-git clone https://github.com/MahmoudAliKhider/Alumni
+git clone https://github.com/MahmoudAliKhider/SocialEcho
 cd your-project
 npm install
+```
 
-Socket.io
-Explain the purpose of the Socket.io integration in your project. Briefly describe what kind of real-time functionality it enables.
+## Usage
 
-API Endpoints
-Account
-Endpoint: /api/account
-Description: Describe what this endpoint does, e.g., user registration and login.
-Methods: POST
+User Management
+Description: Users can manage their profiles, including retrieving their own profile information and updating it.
+# Get user profile
+GET /api/user
+
+Post Creation and Retrieval
+Description: Users can create posts and retrieve posts from their feed.
+
+# Create a new post
+POST /api/post
 Request Body:
-Provide details about the expected request format, e.g., username, password.
-Response:
-Describe the response format, e.g., authentication token.
-User
-Endpoint: /api/user
-Description: Describe what this endpoint does, e.g., fetching user profiles.
-Methods: GET
-Response:
-Describe the response format, e.g., user profile information.
-Post
-Endpoint: /api/post
-Description: Describe what this endpoint does, e.g., creating and retrieving posts.
-Methods: POST, GET
-Request Body:
-Provide details about the expected request format, e.g., post content.
-Response:
-Describe the response format, e.g., posted content.
-Message
-Endpoint: /api/message
-Description: Describe what this endpoint does, e.g., sending and receiving messages.
-Methods: POST, GET
-Request Body:
-Provide details about the expected request format, e.g., recipient, message content.
-Response:
-Describe the response format, e.g., sent message confirmation.
-My Network
-Endpoint: /api/myNetwork
-Description: Describe what this endpoint does, e.g., managing user connections.
-Methods: POST, GET
-Response:
-Describe the response format, e.g., network connections information.
-Notifications
-Endpoint: /api/notifications
-Description: Describe what this endpoint does, e.g., handling user notifications.
-Methods: GET
-Response:
-Describe the response format, e.g., notification details.
-Environment Variables
-Explain the purpose of the environment variables used in your project. Provide a list of required environment variables and their meanings.
+{
+  "content": "This is my new post!",
+  "postImageUrl": form-data
+}
 
-PORT: The port on which the server will run.
-DATABASE_URL: The URL of your database.
-... (other variables)
-Contributing
-Explain how others can contribute to your project. Provide guidelines for submitting pull requests and any coding standards you expect contributors to follow.
+# Retrieve posts
+GET /api/post
 
-License
-Specify the license under which your project is published
+Messaging
+Description: Users can send and receive messages to/from other users
+
+# Send a message
+POST /api/message
+Request Body:
+{
+  "recipient": "recipientUsername",
+  "content": "Hello, how are you?"
+}
+
+# Retrieve messages
+GET /api/message
+
+Connection Management
+Description: Users can manage their network connections (friends, followers, etc.).
+
+# Send a connection request
+## to make follow 
+POST /api/myNetwork/userId
+
+# Get user's connections
+GET /api/myNetwork
+
+# Notification Handling
+Description: Users receive notifications for various activities, such as new messages, connection requests, etc.
+
+## Use Socket.io
+
+Authentication
+Description: Users need to authenticate to access their account and perform actions.
+
+# Register a new user
+POST /api/account/register
+Request Body:
+{
+  "userName":"",
+    "email":"",
+    "phone":"",
+    "password":"",
+    "address":"",
+    "graduationYear":"",
+    "dateOfBirth":""
+}
+
+# Login
+POST /api/account/login
+Request Body:
+{
+  "email": "mail",
+  "password": "secretpassword"
+}
+
+
+
+```bash
+# Example usage
+npm start
+```
+
+
+## API Endpoints
+
+### User
+
+- **Endpoint:** `/api/user`
+- **Description:** This endpoint allows users to manage their profiles.
+- **Methods:** GET, PUT
+
+### Post
+
+- **Endpoint:** `/api/post`
+- **Description:** This endpoint enables users to create and retrieve posts.
+- **Methods:** POST, GET
+
+### Message
+
+- **Endpoint:** `/api/message`
+- **Description:** This endpoint facilitates sending and receiving messages.
+- **Methods:** POST, GET
+
+
+### My Network
+
+- **Endpoint:** `/api/myNetwork`
+- **Description:** This endpoint allows users to manage their connections.
+- **Methods:** POST, GET
+
+
+### Notifications
+
+- **Endpoint:** `/api/notifications`
+- **Description:** This endpoint handles user notifications.
+- **Methods:** GET
+
+### Authentication
+
+- **Endpoint:** `/api/account`
+- **Description:** This endpoint handles user authentication.
+- **Methods:** POST
+
+
