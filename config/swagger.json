@@ -1,0 +1,380 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Your API"
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+
+  "paths": {
+    "/api/account/register": {
+      "post": {
+        "tags": ["account"],
+        "summary": "Register a new user",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "schema": {
+              "$ref": "#/definitions/UserToken"
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/ErrorValidationResponse"
+            }
+          }
+        },
+        "examples": {
+          "request": {
+            "summary": "Example request body",
+            "value": {
+              "userName": "mahmoud Khider",
+              "email": "mahmoudkhider087@gmail.com",
+              "phone": "01024897970",
+              "password": "Pa$$w0rd",
+              "address": "elsohada",
+              "graduationYear": "2021",
+              "dateOfBirth": "2001"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/login": {
+      "post": {
+        "tags": ["account"],
+        "summary": "Login ",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "schema": {
+              "$ref": "#/definitions/UserToken"
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/ErrorValidationResponse"
+            }
+          }
+        },
+        "examples": {
+          "request": {
+            "summary": "Example request body",
+            "value": {
+              "email": "mahmoudkhider087@gmail.com",
+              "password": "Pa$$w0rd"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/forgetPassword": {
+      "post": {
+        "tags": ["account"],
+        "summary": "forgetPassword ",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/forgetPassword"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "schema": {
+              "$ref": "#/definitions/UserToken"
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/ErrorValidationResponse"
+            }
+          }
+        },
+        "examples": {
+          "request": {
+            "summary": "Example request body",
+            "value": {
+              "email": "mahmoudkhider087@gmail.com"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/verifyPassResetCode": {
+      "post": {
+        "tags": ["account"],
+        "summary": "forgetPassword ",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/verifyPassResetCode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "schema": {
+              "$ref": "#/definitions/UserToken"
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": {
+              "$ref": "#/definitions/ErrorValidationResponse"
+            }
+          }
+        },
+        "examples": {
+          "request": {
+            "summary": "Example request body",
+            "value": {
+              "resetCode": "123456"
+            }
+          }
+        }
+      }
+    },
+    "/api/account/resetPassword": {
+      "post": {
+        "tags": ["account"],
+        "summary": "resetPassword ",
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resetPassword"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        },
+        "examples": {
+          "request": {
+            "summary": "Example request body",
+            "value": {
+              "email": "mahmoudkhider087@gmail.com",
+              "newPassword": "Pa$$w0rd"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/getUser/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get a user by ID",
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Failed to get the user"
+          }
+        }
+      }
+    },
+    "/api/user/getAllUsers": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserInput"
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to get the users"
+          }
+        }
+      }
+    },
+    "/api/user/addImage": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Add an image to a user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "imageUrl",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image added successfully",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "No image provided"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Failed to update the image"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UserInput": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "graduationYear": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "forgetPassword": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "verifyPassResetCode": {
+      "type": "object",
+      "properties": {
+        "resetCode": {
+          "type": "string"
+        }
+      }
+    },
+    "resetPassword": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

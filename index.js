@@ -1,11 +1,14 @@
 const express = require("express");
 const path = require("path");
 
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./config/swagger.json");
+
 const app = express();
 
 const DatabaseConnection = require("./config/database");
 const authMiddleware = require("./middelware/authMiddelware");
-const { initSocket } = require('./utils/socket/socket.io'); // Import the initSocket function
+const { initSocket } = require('./utils/socket/socket.io'); 
 
 require("dotenv").config();
 
@@ -29,7 +32,9 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "uploads")));
 
+app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/account", require("./routers/authUser"));
+
 app.use(authMiddleware);
 
 app.use("/api/user", require("./routers/user"));
