@@ -13,6 +13,7 @@
     "@vs-org/authenticator": "^0.0.8",
     "@vs-org/base-32": "^0.0.2",
     "@vs-org/logger": "^0.0.2",
+    "@vs-org/random": "^0.0.6",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "crypto": "^1.0.1",
