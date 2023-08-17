@@ -16,9 +16,6 @@ Brief description or introduction of your social media project.
   - [My Network](#my-network)
   - [Notifications](#notifications)
   - [Authentication](#authentication)
-- [Environment Variables](#environment-variables)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
