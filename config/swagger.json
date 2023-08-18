@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Your API"
+    "title": "API"
   },
   "schemes": ["http"],
   "consumes": ["application/json"],
@@ -309,7 +309,281 @@
           }
         }
       }
+    },
+
+    "/api/post/createPosts": {
+      "post": {
+        "tags": ["Post"],
+        "summary": "Create a new post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "content",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "postImageUrl",
+            "in": "formData",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error creating post"
+          }
+        }
+      }
+    },
+    "/api/post/posts": {
+      "get": {
+        "tags": ["Post"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "Posts retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Post"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error retrieving posts"
+          }
+        }
+      }
+    },
+    "/api/post/{postId}": {
+      "get": {
+        "tags": ["Post"],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Get a post by ID",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Error retrieving post"
+          }
+        }
+      }
+    },
+    "/api/post/delete/{postId}": {
+      "delete": {
+        "tags": ["Post"],
+        "summary": "Delete a post by ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post deleted successfully"
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Error deleting post"
+          }
+        }
+      }
+    },
+    "/api/post/update/{postId}": {
+      "put": {
+        "tags": ["Post"],
+        "summary": "Update a post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "postImageUrl",
+            "in": "formData",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post updated successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Error updating post"
+          }
+        }
+      }
+    },
+    "/api/post/{postId}/like": {
+      "post": {
+        "tags": ["Post"],
+        "summary": "Like/Unlike a post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post liked/unliked successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
+          },
+          "500": {
+            "description": "Error updating post"
+          }
+        }
+      }
+    },
+    "/api/post/comment/{postId}": {
+      "post": {
+        "tags": ["Post"],
+        "summary": "Add a comment to a post",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Comment added successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post or user not found"
+          },
+          "500": {
+            "description": "Error adding comment"
+          }
+        }
+      }
     }
+    
+    
   },
   "definitions": {
     "UserInput": {
@@ -373,6 +647,17 @@
         },
         "newPassword": {
           "type": "string"
+        }
+      }
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "postImageUrl": {
+          "type": "file"
         }
       }
     }

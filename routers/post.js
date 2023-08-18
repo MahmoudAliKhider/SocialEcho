@@ -78,7 +78,7 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
-router.delete("/:postId", async (req, res) => {
+router.delete("/delete/:postId", async (req, res) => {
   const { postId } = req.params;
 
   try {
@@ -179,7 +179,7 @@ router.post("/:postId/like", async (req, res) => {
 });
 
 router.post("/comment/:postId", async (req, res) => {
-  const { postId } = req.params;
+  const postId = req.params.postId;
   const content = req.body.content;
 
   try {

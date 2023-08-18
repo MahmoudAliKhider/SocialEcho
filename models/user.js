@@ -50,6 +50,6 @@ const userSchema = new mongoose.Schema({
   },
   imageUrl: { type: String, default: null },
 });
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("Users", userSchema);
 
 module.exports = User;
