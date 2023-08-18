@@ -212,6 +212,7 @@
         }
       }
     },
+
     "/api/user/getUser/{id}": {
       "get": {
         "tags": ["User"],
@@ -770,6 +771,56 @@
           },
           "500": {
             "description": "Error Delete the message"
+          }
+        }
+      }
+    },
+
+    "/api/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "Send a new Notifications",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "data": {}
+          },
+          "500": {
+            "description": "Error retrieving notifications"
+          }
+        }
+      }
+    },
+    "/api/notifications/{notificationId}": {
+      "put": {
+        "tags": ["Notifications"],
+        "summary": "notification as read",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the notificationId "
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "data": {}
+          },
+          "500": {
+            "description": "Error retrieving notifications"
           }
         }
       }
