@@ -584,7 +584,7 @@
     "/api/myNetwork/{destinationUserId}": {
       "post": {
         "tags": ["Mynetwork"],
-        "summary": "follow user",
+        "summary": "follow some user endpoint to follow another user.",
         "security": [
           {
             "BearerAuth": []
@@ -617,7 +617,7 @@
     "/api/myNetwork/current-user-followers": {
       "get": {
         "tags": ["Mynetwork"],
-        "summary": "get a followers",
+        "summary": "end point for getting the followers who is the current user follow. \"People who is the current user follow\"",
         "security": [
           {
             "BearerAuth": []
@@ -642,7 +642,7 @@
     "/api/myNetwork/current-user-followed-by": {
       "get": {
         "tags": ["Mynetwork"],
-        "summary": "get a following",
+        "summary": "end point for getting the followed by users for the current user. \"People who follows the current user\"",
         "security": [
           {
             "BearerAuth": []
@@ -663,7 +663,46 @@
           }
         }
       }
+    },
+
+    "/api/messages/{recipientId}": {
+      "post": {
+        "tags": ["messages"],
+        "summary": "Send a new message",
+        "parameters": [
+          {
+            "name": "recipientId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the recipient user"
+          }
+        ],
+        "requestBody": {
+          "description": "Message content",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Message"
+              }
+            }
+          }
+        },
+        "consumes": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Message sent successfully"
+          },
+          "500": {
+            "description": "Error sending the message"
+          }
+        }
+      }
     }
+    
+    
+    
   },
   "definitions": {
     "UserInput": {
@@ -740,6 +779,17 @@
           "type": "file"
         }
       }
+    },
+     "Message": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string",
+        "description": "Message content",
+        "x-example": "Hello, this is a sample message."
+      }
     }
+  }
+
   }
 }
