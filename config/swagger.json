@@ -4,7 +4,8 @@
     "version": "1.0.0",
     "title": "API"
   },
-  "schemes": ["http"],
+  "schemes": ["https"],
+  "host": "https://socialecho.onrender.com",
   "consumes": ["application/json"],
   "securityDefinitions": {
     "BearerAuth": {
