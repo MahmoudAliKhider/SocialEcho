@@ -567,9 +567,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "data": {
-                  
-                }
+                "data": {}
               }
             }
           },
@@ -581,9 +579,91 @@
           }
         }
       }
+    },
+
+    "/api/myNetwork/{destinationUserId}": {
+      "post": {
+        "tags": ["Mynetwork"],
+        "summary": "follow user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "destinationUserId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User follow/unfollow successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Error updating post"
+          }
+        }
+      }
+    },
+    "/api/myNetwork/current-user-followers": {
+      "get": {
+        "tags": ["Mynetwork"],
+        "summary": "get a followers",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get followers successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Error updating post"
+          }
+        }
+      }
+    },
+    "/api/myNetwork/current-user-followed-by": {
+      "get": {
+        "tags": ["Mynetwork"],
+        "summary": "get a following",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get following successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Error updating post"
+          }
+        }
+      }
     }
-    
-    
   },
   "definitions": {
     "UserInput": {
