@@ -1,7 +1,6 @@
 
 # SocialEcho
-
-Brief description or introduction of your social media project.
+https://socialecho.onrender.com/swagger/
 
 ## Table of Contents
 
