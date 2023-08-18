@@ -553,14 +553,24 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "content",
-            "in": "formData",
-            "required": true,
-            "type": "string"
           }
         ],
+        "requestBody": {
+          "description": "Message content",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Comment added successfully",
@@ -669,6 +679,11 @@
       "post": {
         "tags": ["messages"],
         "summary": "Send a new message",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "recipientId",
@@ -679,17 +694,20 @@
           }
         ],
         "requestBody": {
-          "description": "Message content",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/definitions/Message"
+                "$ref": "#/components/schemas/content"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/content"
               }
             }
           }
         },
-        "consumes": ["application/json"],
         "responses": {
           "200": {
             "description": "Message sent successfully"
@@ -699,10 +717,75 @@
           }
         }
       }
+    },
+    "/api/message/thread/{recipientId}": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Send a new message",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recipientId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the recipient user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message sent successfully"
+          },
+          "500": {
+            "description": "Error sending the message"
+          }
+        }
+      }
+    },
+    "/api/message/{messageId}": {
+      "delete": {
+        "tags": ["messages"],
+        "summary": "Send a new message",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the messageId "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message Delete successfully"
+          },
+          "500": {
+            "description": "Error Delete the message"
+          }
+        }
+      }
     }
-    
-    
-    
+  },
+  "components": {
+    "schemas": {
+      "content": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "UserInput": {
@@ -780,16 +863,15 @@
         }
       }
     },
-     "Message": {
-    "type": "object",
-    "properties": {
-      "content": {
-        "type": "string",
-        "description": "Message content",
-        "x-example": "Hello, this is a sample message."
+    "Message": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "Message content",
+          "x-example": "Hello, this is a sample message."
+        }
       }
     }
-  }
-
   }
 }

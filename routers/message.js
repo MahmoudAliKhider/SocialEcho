@@ -48,7 +48,7 @@ router.get("/thread/:recipientId", async (req, res) => {
 });
 
 router.delete("/:messageId", async (req, res) => {
-  const { messageId } = req.params;
+  const  messageId  = req.params.messageId;
 
   try {
     const message = await Message.findByIdAndDelete(messageId);
