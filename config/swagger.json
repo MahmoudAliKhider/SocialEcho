@@ -15,7 +15,7 @@
   },
 
   "paths": {
-    
+
     "/api/account/register": {
       "post": {
         "tags": ["account"],
@@ -555,24 +555,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "formData",
+            "required": true,
+            "type": "string"
           }
         ],
-        "requestBody": {
-          "description": "Message content",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "content": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
+        
         "responses": {
           "201": {
             "description": "Comment added successfully",
