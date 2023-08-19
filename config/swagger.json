@@ -4,8 +4,8 @@
     "version": "1.0.0",
     "title": "API"
   },
-  "schemes": ["https","http"],
-   "consumes": ["application/json"],
+  "schemes": ["https", "http"],
+  "consumes": ["application/json"],
   "securityDefinitions": {
     "BearerAuth": {
       "type": "apiKey",
@@ -15,7 +15,6 @@
   },
 
   "paths": {
-
     "/api/account/register": {
       "post": {
         "tags": ["account"],
@@ -565,7 +564,7 @@
             }
           }
         ],
-       
+
         "responses": {
           "201": {
             "description": "Comment added successfully",
@@ -585,7 +584,6 @@
         }
       }
     },
-    
 
     "/api/myNetwork/{destinationUserId}": {
       "post": {
@@ -697,7 +695,7 @@
             }
           }
         ],
-        
+
         "responses": {
           "200": {
             "description": "Message sent successfully"
@@ -870,7 +868,7 @@
       "properties": {
         "content": {
           "type": "string"
-        } 
+        }
       }
     },
     "forgetPassword": {
