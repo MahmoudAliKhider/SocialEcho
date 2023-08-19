@@ -5,7 +5,7 @@
     "title": "API"
   },
   "schemes": ["https"],
-  "consumes": ["application/json"],
+   "consumes": ["application/json"],
   "securityDefinitions": {
     "BearerAuth": {
       "type": "apiKey",
@@ -15,6 +15,7 @@
   },
 
   "paths": {
+    
     "/api/account/register": {
       "post": {
         "tags": ["account"],
