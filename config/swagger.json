@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "title": "API"
   },
-  "schemes": ["https"],
+  "schemes": ["https","http"],
    "consumes": ["application/json"],
   "securityDefinitions": {
     "BearerAuth": {
@@ -558,12 +558,14 @@
           },
           {
             "name": "content",
-            "in": "formData",
+            "in": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
           }
         ],
-        
+       
         "responses": {
           "201": {
             "description": "Comment added successfully",
@@ -583,6 +585,7 @@
         }
       }
     },
+    
 
     "/api/myNetwork/{destinationUserId}": {
       "post": {
@@ -668,7 +671,7 @@
       }
     },
 
-    "/api/messages/{recipientId}": {
+    "/api/message/{recipientId}": {
       "post": {
         "tags": ["messages"],
         "summary": "Send a new message",
@@ -684,23 +687,17 @@
             "required": true,
             "type": "string",
             "description": "ID of the recipient user"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/content"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/content"
-              }
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Message"
             }
           }
-        },
+        ],
+        
         "responses": {
           "200": {
             "description": "Message sent successfully"
@@ -866,6 +863,14 @@
         "password": {
           "type": "string"
         }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        } 
       }
     },
     "forgetPassword": {
